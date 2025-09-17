@@ -1,4 +1,4 @@
-name: Deploy Automatizado
+name: EAD gDeploy Automatizado
 
 # Executa ao fazer push no repositório
 on:
@@ -43,4 +43,4 @@ jobs:
       run: |
         echo "Deploy executado com sucesso!"
         echo "Artefato gerado com informações do deploy"
-        echo "Pipeline finalizado!"
+        echo "Pipeline finalizado!!"
