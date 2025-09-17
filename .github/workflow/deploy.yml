@@ -1,0 +1,46 @@
+name: Deploy Automatizado
+
+# Executa ao fazer push no repositório
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Faz checkout do código
+    - name: Checkout do código
+      uses: actions/checkout@v4
+      
+    # Build simples conforme especificado
+    - name: Build simples
+      run: |
+        echo "Deploy bem-sucedido"
+        echo "Executando build..."
+        echo "Data: $(date)"
+        echo "Build finalizado com sucesso!"
+        
+    # Cria artefato de sucesso
+    - name: Criar artefato
+      run: |
+        mkdir artifacts
+        echo "Deploy bem-sucedido" > artifacts/deploy-status.txt
+        echo "Data do deploy: $(date)" >> artifacts/deploy-status.txt
+        echo "Commit: ${{ github.sha }}" >> artifacts/deploy-status.txt
+        echo "Branch: ${{ github.ref_name }}" >> artifacts/deploy-status.txt
+        
+    # Upload do artefato gerado
+    - name: Upload artefato
+      uses: actions/upload-artifact@v4
+      with:
+        name: deploy-artifact
+        path: artifacts/
+        
+    # Mensagem final de sucesso
+    - name: Mensagem de sucesso
+      run: |
+        echo "Deploy executado com sucesso!"
+        echo "Artefato gerado com informações do deploy"
+        echo "Pipeline finalizado!"
