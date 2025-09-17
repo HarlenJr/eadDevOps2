@@ -1,0 +1,32 @@
+name: Deploy Automatizado
+
+# Executa ao fazer push no repositório
+on:
+  push:
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Build simples
+      run: echo "Deploy bem-sucedido"
+        
+    - name: Criar artefato
+      run: |
+        mkdir -p artifacts
+        echo "Deploy bem-sucedido" > artifacts/status.txt
+        echo "Data: $(date)" >> artifacts/status.txt
+        
+    - name: Upload artefato
+      uses: actions/upload-artifact@v3
+      with:
+        name: deploy-status
+        path: artifacts/
+        
+    - name: Sucesso
+      run: echo "Pipeline executado com sucesso!"
